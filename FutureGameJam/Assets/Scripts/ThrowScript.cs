@@ -6,7 +6,7 @@ public class ThrowScript : MonoBehaviour
 {
     private bool IsHolding;
 
-    [SerializeField] float _degreesPerSecond = 50f;
+    [SerializeField] float _degreesPerSecond = 60f;
     [SerializeField] Vector3 _axis = Vector3.forward;
 
     public Rigidbody2D rb;
@@ -18,19 +18,27 @@ public class ThrowScript : MonoBehaviour
     private bool hh = true;
     private bool gg;
 
+    public HitThingScript HTS;
+    public GameObject ThrowThingPos;
+
+    public GameObject CircleClueOnOff;
+
+    public AudioSource Audio;
+
+    //public GameObject OriginalThrowThingPos;
+
     //Vector3 rotation = gameObject.transform.rotation.eulerAngles;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(Startad());
     }
 
     // Update is called once per frame
     void Update()
     {
         HoldMoseButton();
-
     }
 
     public void HoldMoseButton()
@@ -43,18 +51,16 @@ public class ThrowScript : MonoBehaviour
 
                 transform.Rotate(_axis.normalized * _degreesPerSecond * Time.deltaTime);
 
-                if (transform.rotation.eulerAngles.z > 250)
+                if (transform.rotation.eulerAngles.z > 220)
                 {
-                    _degreesPerSecond = 50f;
+                    _degreesPerSecond = 60f;
                     Debug.Log("<100");
                 }
-                else if (transform.rotation.eulerAngles.z < 142)
+                else if (transform.rotation.eulerAngles.z < 140)
                 {
-                    _degreesPerSecond = -50f;
+                    _degreesPerSecond = -60f;
                     Debug.Log(">100");
                 }
-
-
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -70,11 +76,10 @@ public class ThrowScript : MonoBehaviour
                 rb.velocity = transform.right * moveSpeed;
                 rb.constraints = RigidbodyConstraints2D.None;
                 throwed = true;
+                CircleClueOnOff.SetActive(false);
+                Audio.Play();
             }
-
         }
-        
-
     }
 
     
@@ -82,12 +87,21 @@ public class ThrowScript : MonoBehaviour
     {
         if (throwed)
         {
-
+            yield return new WaitForSeconds(4f);
+            if (!HTS.PlayerWonLevel)
+            {
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
+                yield return new WaitForSeconds(0.01f);
+                //rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                //yield return new WaitForSeconds(0.1f);
+                transform.position = ThrowThingPos.transform.position;
+                throwed = false;
+                CircleClueOnOff.SetActive(true);
+            }  
         }
 
         yield return new WaitForSeconds(1);
         StartCoroutine("Startad");
-    }
-    
+    } 
 }
 

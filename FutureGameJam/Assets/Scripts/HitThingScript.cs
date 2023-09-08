@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HitThingScript : MonoBehaviour
 {
+    public bool PlayerWonLevel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,7 @@ public class HitThingScript : MonoBehaviour
         if (other.tag == "HitThing")
         {
             Debug.Log("You Won");
+            PlayerWonLevel = true;
         }
     }
 }
