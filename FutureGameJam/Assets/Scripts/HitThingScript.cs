@@ -6,6 +6,8 @@ public class HitThingScript : MonoBehaviour
 {
     public bool PlayerWonLevel;
 
+    public GameObject WinMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class HitThingScript : MonoBehaviour
         {
             Debug.Log("You Won");
             PlayerWonLevel = true;
+            WinMenu.SetActive(true);
         }
     }
 }
