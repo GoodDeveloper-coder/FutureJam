@@ -15,7 +15,7 @@ public class ThrowScript : MonoBehaviour
 
     public bool throwed = false;
 
-    private bool hh = true;
+    private bool hh;
     private bool gg;
 
     public HitThingScript HTS;
@@ -45,7 +45,7 @@ public class ThrowScript : MonoBehaviour
     {
         if (!throwed)
         {
-
+            
             if (IsHolding)
             {
 
@@ -62,15 +62,18 @@ public class ThrowScript : MonoBehaviour
                     Debug.Log(">100");
                 }
             }
-
+            
             if (Input.GetMouseButtonDown(0))
             {
                 Debug.Log("Held");
 
                 IsHolding = true;
+                //gg = true;
+                //StartCoroutine(Startad());
             }
             else if (Input.GetMouseButtonUp(0))
             {
+                
                 Debug.Log("Not held");
                 IsHolding = false;
                 rb.velocity = transform.right * moveSpeed;
@@ -78,7 +81,11 @@ public class ThrowScript : MonoBehaviour
                 throwed = true;
                 CircleClueOnOff.SetActive(false);
                 Audio.Play();
+                
+                //hh = true;
+                //StartCoroutine(Startad());
             }
+            
         }
     }
 
@@ -98,8 +105,45 @@ public class ThrowScript : MonoBehaviour
                 throwed = false;
                 CircleClueOnOff.SetActive(true);
             }  
+
+
+        }
+        /*
+        if (gg)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                yield return new WaitForSeconds(0.3f);
+                IsHolding = true;
+                Debug.Log("Heldd");
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                Debug.Log("NoHeld");
+            }
+
+
         }
 
+        if (hh)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                yield return new WaitForSeconds(0.3f);
+                Debug.Log("Not held");
+                IsHolding = false;
+                rb.velocity = transform.right * moveSpeed;
+                rb.constraints = RigidbodyConstraints2D.None;
+                throwed = true;
+                CircleClueOnOff.SetActive(false);
+                Audio.Play();
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("NoHeld");
+            }
+        }
+        */
         yield return new WaitForSeconds(1);
         StartCoroutine("Startad");
     } 

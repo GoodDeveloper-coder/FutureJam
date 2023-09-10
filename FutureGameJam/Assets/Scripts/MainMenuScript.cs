@@ -19,7 +19,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("SampleScene 1");
     }
 
     public void QuitGame()
@@ -28,6 +28,10 @@ public class MainMenuScript : MonoBehaviour
         //SceneManager.LoadScene("Quit");
     }
 
+    public int SceneIndex;
+
+    public int LevelSceneIndex;
+        
     public void PauseGame()
     {
         Time.timeScale = 0;
@@ -45,9 +49,13 @@ public class MainMenuScript : MonoBehaviour
 
     public void RestartScene()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(SceneIndex);
     }
 
 
+    public void NextLevelLoader()
+    {
+        SceneManager.LoadScene(LevelSceneIndex);
+    }
 
 }
